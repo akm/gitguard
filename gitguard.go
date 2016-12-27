@@ -35,18 +35,6 @@ func main() {
 		},
 	}
 
-	app.Before = func(c *cli.Context) error {
-		// 開始前の処理をここに書く
-		fmt.Println("開始")
-		return nil // error を返すと処理全体が終了
-	}
-
-	app.After = func(c *cli.Context) error {
-		// 終了時の処理をここに書く
-		fmt.Println("終了")
-		return nil
-	}
-
 	app.Run(os.Args)
 }
 
@@ -62,11 +50,10 @@ func executeCommand(c *cli.Context) error {
 	var args []string = c.Args()
 	var cmdStr = strings.Join(args, " ")
 	fmt.Println("[gitguard] " + cmdStr)
-	err := runCommand(args[0], args[1:]...)
-	if err != nil {
-		fmt.Printf("\x1b[31m[gitguard]%v\x1b[0m\n", err)
-		os.Exit(1)
-	}
+	runCommandWithExit(args...)
+
+	runCommandWithExit("git", "add", ".")
+	runCommandWithExit("git", "commit", "-m", cmdStr)
 
 	return nil
 }
@@ -77,6 +64,16 @@ func runCommand(name string, args ...string) error {
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	return err
+}
+
+func runCommandWithExit(args ...string) {
+	var cmdStr = strings.Join(args, " ")
+	fmt.Println("[gitguard] " + cmdStr)
+	err := runCommand(args[0], args[1:]...)
+	if err != nil {
+		fmt.Printf("\x1b[31m[gitguard]%v\x1b[0m\n", err)
+		os.Exit(1)
+	}
 }
 
 func showStatus(c *cli.Context) error {
