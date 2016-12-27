@@ -54,10 +54,7 @@ func executeCommand(c *cli.Context) error {
 	if !isClean() {
 		fmt.Println("\x1b[31m[gitguard] There are files that need to be committed first.\x1b[0m")
 		fmt.Println("[gitguard] git status")
-		cmd := exec.Command("git", "status")
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		cmd.Run()
+		runCommand("git", "status")
 		os.Exit(1)
 	}
 
@@ -69,6 +66,14 @@ func executeCommand(c *cli.Context) error {
 
 	fmt.Printf("Hello world! %s\n", paramFirst)
 	return nil
+}
+
+func runCommand(name string, args ...string) error {
+	cmd := exec.Command(name, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	return err
 }
 
 func showStatus(c *cli.Context) error {
