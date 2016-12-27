@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/urfave/cli"
 )
@@ -58,13 +59,15 @@ func executeCommand(c *cli.Context) error {
 		os.Exit(1)
 	}
 
-	// パラメータ
-	var paramFirst = ""
-	if len(c.Args()) > 0 {
-		paramFirst = c.Args().First() // c.Args()[0] と同じ意味
+	var args []string = c.Args()
+	var cmdStr = strings.Join(args, " ")
+	fmt.Println("[gitguard] " + cmdStr)
+	err := runCommand(args[0], args[1:]...)
+	if err != nil {
+		fmt.Printf("\x1b[31m[gitguard]%v\x1b[0m\n", err)
+		os.Exit(1)
 	}
 
-	fmt.Printf("Hello world! %s\n", paramFirst)
 	return nil
 }
 
