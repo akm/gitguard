@@ -22,15 +22,7 @@ func main() {
 		},
 	}
 
-	app.Commands = []cli.Command{
-		// コマンド設定
-		{
-			Name:    "hello",
-			Aliases: []string{"h"},
-			Usage:   "hello world を表示します",
-			Action:  helloAction,
-		},
-	}
+	app.Action = helloAction
 
 	app.Before = func(c *cli.Context) error {
 		// 開始前の処理をここに書く
@@ -47,7 +39,7 @@ func main() {
 	app.Run(os.Args)
 }
 
-func helloAction(c *cli.Context) {
+func helloAction(c *cli.Context) error {
 
 	// グローバルオプション
 	var isDry = c.GlobalBool("dryrun")
@@ -62,4 +54,5 @@ func helloAction(c *cli.Context) {
 	}
 
 	fmt.Printf("Hello world! %s\n", paramFirst)
+	return nil
 }
