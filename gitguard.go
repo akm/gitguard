@@ -12,17 +12,9 @@ import (
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "sample_client"
-	app.Usage = "github.com/codegangsta/cli のテンプレートです"
+	app.Name = "gitguard"
+	app.Usage = "github.com/akm/gitguard"
 	app.Version = "0.0.1"
-
-	// グローバルオプション設定
-	app.Flags = []cli.Flag{
-		cli.BoolFlag{
-			Name:  "dryrun, d", // 省略指定 => d
-			Usage: "グローバルオプション dryrunです。",
-		},
-	}
 
 	app.Action = executeCommand
 
