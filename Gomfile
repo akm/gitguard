@@ -1,1 +1,5 @@
 gom 'github.com/urfave/cli', :commit => '0bdeddeeb0f650497d603c4ad7b20cfe685682f6'
+
+group :development do
+  gom 'github.com/tcnksm/ghr'
+end
