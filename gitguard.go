@@ -24,6 +24,15 @@ func main() {
 
 	app.Action = helloAction
 
+	app.Commands = []cli.Command{
+		{
+			Name: "status",
+			Aliases: []string{"s"},
+			Usage: "Show status of this repository",
+			Action: showStatus,
+		},
+	}
+
 	app.Before = func(c *cli.Context) error {
 		// 開始前の処理をここに書く
 		fmt.Println("開始")
@@ -55,4 +64,25 @@ func helloAction(c *cli.Context) error {
 
 	fmt.Printf("Hello world! %s\n", paramFirst)
 	return nil
+}
+
+func showStatus(c *cli.Context) error {
+	if isClean() {
+		fmt.Printf("Clean\n")
+	} else {
+		fmt.Printf("NG\n")
+	}
+  return nil
+}
+
+func isClean() bool {
+  return !isChanged() && noUntrackedFiles()
+}
+
+func isChanged() bool {
+	return true
+}
+
+func noUntrackedFiles() bool {
+	return true
 }
