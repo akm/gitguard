@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/urfave/cli"
 )
@@ -80,7 +81,10 @@ func isClean() bool {
 }
 
 func isChanged() bool {
-	return true
+	cmd := exec.Command("git", "diff", "--exit-code")
+	cmd.Stdout = nil
+	err := cmd.Run()
+	return err != nil
 }
 
 func noUntrackedFiles() bool {
