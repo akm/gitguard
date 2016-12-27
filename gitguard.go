@@ -32,6 +32,11 @@ func main() {
 
 func executeCommand(c *cli.Context) error {
 
+	if c.NArg() < 1 {
+		cli.ShowAppHelp(c)
+		os.Exit(1)
+	}
+
 	if !isClean() {
 		fmt.Println("\x1b[31m[gitguard] There are files that need to be committed first.\x1b[0m")
 		fmt.Println("[gitguard] git status")
