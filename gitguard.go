@@ -88,5 +88,11 @@ func isChanged() bool {
 }
 
 func noUntrackedFiles() bool {
-	return true
+	cmd := exec.Command("git", "ls-files", " --others", "--exclude-standard")
+	out, err := cmd.Output()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	return len(out) == 0
 }
