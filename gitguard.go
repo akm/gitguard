@@ -63,9 +63,9 @@ func executeCommand(c *cli.Context) error {
 
 func showStatus(c *cli.Context) error {
 	if isClean() {
-		fmt.Printf("Clean\n")
+		fmt.Printf("\x1b[32mClean\x1b[0m\n")
 	} else {
-		fmt.Printf("NG\n")
+		fmt.Printf("\x1b[31mNG\x1b[0m\n")
 	}
   return nil
 }
