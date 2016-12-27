@@ -50,3 +50,15 @@ Build for current platform
 ```
 gom build
 ```
+
+## Release
+
+```
+$ rm -rf pkg/
+$ mkdir -p pkg/
+$ vendor/bin/gox -output="pkg/{{.Dir}}_{{.OS}}_{{.Arch}}"
+$ export VERSION=[v0.0.1]
+$ vendor/bin/ghr $VERSION pkg/
+$ git tag $VERSION
+$ git push origin --tags
+```
