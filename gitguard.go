@@ -48,12 +48,10 @@ func executeCommand(c *cli.Context) error {
 	}
 
 	var args []string = c.Args()
-	var cmdStr = strings.Join(args, " ")
-	fmt.Println("[gitguard] " + cmdStr)
 	runCommandWithExit(args...)
 
 	runCommandWithExit("git", "add", ".")
-	runCommandWithExit("git", "commit", "-m", cmdStr)
+	runCommandWithExit("git", "commit", "-m", strings.Join(args, " "))
 
 	return nil
 }
