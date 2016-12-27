@@ -51,6 +51,16 @@ func main() {
 
 func executeCommand(c *cli.Context) error {
 
+	if !isClean() {
+		fmt.Println("\x1b[31m[gitguard] There are files that need to be committed first.\x1b[0m")
+		fmt.Println("[gitguard] git status")
+		cmd := exec.Command("git", "status")
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		cmd.Run()
+		os.Exit(1)
+	}
+
 	// パラメータ
 	var paramFirst = ""
 	if len(c.Args()) > 0 {
