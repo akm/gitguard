@@ -36,3 +36,17 @@ Changes not staged for commit:
 
 	modified:   gitguard.go
 ```
+
+
+## How to biuld
+
+At first, install gom.
+```
+go get github.com/mattn/gom
+```
+
+Build for current platform
+
+```
+gom build
+```
