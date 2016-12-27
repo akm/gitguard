@@ -23,7 +23,7 @@ func main() {
 		},
 	}
 
-	app.Action = helloAction
+	app.Action = executeCommand
 
 	app.Commands = []cli.Command{
 		{
@@ -49,13 +49,7 @@ func main() {
 	app.Run(os.Args)
 }
 
-func helloAction(c *cli.Context) error {
-
-	// グローバルオプション
-	var isDry = c.GlobalBool("dryrun")
-	if isDry {
-		fmt.Println("this is dry-run")
-	}
+func executeCommand(c *cli.Context) error {
 
 	// パラメータ
 	var paramFirst = ""
